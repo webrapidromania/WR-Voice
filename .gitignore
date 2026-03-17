@@ -12,3 +12,4 @@ GITRELEASE/
 *.exe
 .vscode/
 .idea/
+AGENTS.md
