@@ -1,0 +1,11 @@
+{
+  "keybind": "caps lock",
+  "model": "turbo",
+  "cleanup_level": 2,
+  "autostart": false,
+  "language": "auto",
+  "context": "raw",
+  "use_vad": false,
+  "debug_console": true,
+  "history": []
+}

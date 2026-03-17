@@ -1,0 +1,18 @@
+WR Voice v1.0 BETA
+Copyright (c) 2026 WebRapid.ro
+
+Free software with attribution.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software, to use, copy, modify, and distribute it,
+subject to the following conditions:
+
+1. Attribution required: All copies or distributions must include
+   visible credit: "Powered by WR Voice — WebRapid.ro"
+
+2. Commercial use: Allowed with attribution.
+
+3. Warranty: This software is provided "as is", without warranty.
+
+Contact: contact@webrapid.ro
+Website: https://webrapid.ro

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WR Voice Uninstall</title>
+<style>
+:root {
+    --bg: #0a0a0a;
+    --bg-glass: rgba(255,255,255,0.04);
+    --border-glass: rgba(255,255,255,0.10);
+    --green: #00ff88;
+    --green-dim: rgba(0,255,136,0.15);
+    --green-glow: 0 0 20px rgba(0,255,136,0.3);
+    --text: #ffffff;
+    --text-dim: rgba(255,255,255,0.5);
+    --font: 'Consolas', monospace;
+    --warn: #ffcc00;
+    --error: #ff4466;
+    --error-dim: rgba(255,68,102,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    backdrop-filter: blur(30px);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    user-select: none;
+    animation: body-fade 0.6s ease;
+}
+@keyframes body-fade {
+    from { opacity: 0; } to { opacity: 1; }
+}
+
+/* ── Content ──────────────────────────────── */
+#content {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── Screens ──────────────────────────────── */
+.screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+.screen.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+/* ── Buttons ──────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+}
+.btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--text-dim);
+    border: 1px solid var(--border-glass);
+}
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
+}
+.btn-danger {
+    background: var(--error);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255,68,102,0.3);
+}
+.btn-danger:hover {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(255,68,102,0.4);
+}
+.btn-danger:active {
+    transform: scale(0.98);
+}
+
+.screen-footer {
+    margin-top: auto;
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+}
+.screen-footer .btn { flex: 1; }
+
+/* ── Config screen ────────────────────────── */
+.uninstall-title {
+    font-size: 20px;
+    color: var(--error);
+    margin-bottom: 16px;
+    text-align: center;
+}
+.info-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+}
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.info-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+.info-value {
+    font-size: 12px;
+    color: var(--text);
+    word-break: break-all;
+}
+.file-list {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-glass);
+}
+.file-list-title {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+}
+.file-item {
+    font-size: 11px;
+    color: var(--text);
+    padding: 2px 0;
+    opacity: 0.7;
+}
+
+/* ── Checkboxes ───────────────────────────── */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.checkbox-row:hover {
+    background: rgba(255,255,255,0.06);
+}
+.checkbox-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border-glass);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+.checkbox-row input[type="checkbox"]:checked {
+    background: var(--error-dim);
+    border-color: var(--error);
+}
+.checkbox-row input[type="checkbox"]:checked::after {
+    content: '\2713';
+    position: absolute;
+    top: -1px;
+    left: 3px;
+    color: var(--error);
+    font-size: 14px;
+}
+.checkbox-label {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.4;
+}
+.checkbox-detail {
+    font-size: 11px;
+    color: var(--text-dim);
+}
+
+/* ── Terminal (progress) ──────────────────── */
+.terminal {
+    flex: 1;
+    background: rgba(8,8,12,0.9);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 16px;
+    overflow-y: auto;
+    min-height: 0;
+    margin-bottom: 12px;
+}
+.terminal-line {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--green);
+    opacity: 0;
+    animation: line-in 0.3s ease forwards;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+.terminal-line.error { color: var(--error); }
+@keyframes line-in {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+.cursor-blink::after {
+    content: '\2588';
+    color: var(--green);
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+.progress-fill {
+    height: 100%;
+    background: var(--error);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 20px rgba(255,68,102,0.3);
+}
+
+/* ── Scrollbar ────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
+}
+</style>
+</head>
+<body>
+
+<div id="content">
+
+    <!-- ════ Config screen ════ -->
+    <div id="screen-config" class="screen active">
+        <h2 class="uninstall-title" data-i18n="title"></h2>
+
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label" data-i18n="folder_label"></span>
+                <span class="info-value" id="install-path"></span>
+            </div>
+            <div class="file-list">
+                <div class="file-list-title" data-i18n="will_delete"></div>
+                <div class="file-item">&bull; WR Voice.exe</div>
+                <div class="file-item">&bull; config.json</div>
+                <div class="file-item">&bull; Uninstall.exe</div>
+                <div class="file-item">&bull; Desktop shortcut</div>
+            </div>
+        </div>
+
+        <div class="options">
+            <label class="checkbox-row">
+                <input type="checkbox" id="delete-models">
+                <div>
+                    <div class="checkbox-label" data-i18n="delete_models"></div>
+                    <div class="checkbox-detail" id="models-size"></div>
+                </div>
+            </label>
+            <label class="checkbox-row">
+                <input type="checkbox" id="delete-cuda">
+                <div>
+                    <div class="checkbox-label" data-i18n="delete_cuda"></div>
+                    <div class="checkbox-detail" id="cuda-size"></div>
+                </div>
+            </label>
+        </div>
+
+        <div class="screen-footer">
+            <button class="btn btn-secondary" onclick="closeWindow()"
+                    data-i18n="cancel"></button>
+            <button class="btn btn-danger" onclick="startUninstall()"
+                    data-i18n="uninstall"></button>
+        </div>
+    </div>
+
+    <!-- ════ Progress screen ════ -->
+    <div id="screen-progress" class="screen">
+        <h2 class="uninstall-title" data-i18n="uninstalling"></h2>
+        <div class="terminal" id="terminal">
+            <div class="cursor-blink" id="terminal-cursor"></div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="screen-footer" id="done-footer" style="display:none">
+            <button class="btn btn-secondary" onclick="closeWindow()"
+                    data-i18n="close"></button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const STRINGS = {
+    ro: {
+        title:        "Dezinstalare WR Voice",
+        folder_label: "Folder:",
+        will_delete:  "Se vor sterge:",
+        delete_models: "Sterge si modelele AI descarcate",
+        delete_cuda:   "Sterge si CUDA runtime descarcat",
+        cancel:       "Anuleaza",
+        uninstall:    "Dezinstaleaza",
+        uninstalling: "Se dezinstaleaza...",
+        close:        "Inchide",
+        models_path:  "%LOCALAPPDATA%\\WRVoice\\",
+        cuda_path:    "%LOCALAPPDATA%\\WRVoice\\cuda\\",
+    },
+    en: {
+        title:        "Uninstall WR Voice",
+        folder_label: "Folder:",
+        will_delete:  "Will be deleted:",
+        delete_models: "Also delete downloaded AI models",
+        delete_cuda:   "Also delete downloaded CUDA runtime",
+        cancel:       "Cancel",
+        uninstall:    "Uninstall",
+        uninstalling: "Uninstalling...",
+        close:        "Close",
+        models_path:  "%LOCALAPPDATA%\\WRVoice\\",
+        cuda_path:    "%LOCALAPPDATA%\\WRVoice\\cuda\\",
+    }
+};
+
+let currentLang = 'ro';
+
+function updateTexts() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (STRINGS[currentLang][key]) {
+            el.textContent = STRINGS[currentLang][key];
+        }
+    });
+}
+
+function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s =>
+        s.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+}
+
+async function startUninstall() {
+    showScreen('progress');
+    const dm = document.getElementById('delete-models').checked;
+    const dc = document.getElementById('delete-cuda').checked;
+    await window.pywebview.api.start_uninstall(dm, dc);
+}
+
+function addTerminalLine(msg, cls) {
+    const terminal = document.getElementById('terminal');
+    const cursor   = document.getElementById('terminal-cursor');
+    const line = document.createElement('div');
+    line.className = 'terminal-line' + (cls ? ' ' + cls : '');
+    line.textContent = '> ' + msg;
+    terminal.insertBefore(line, cursor);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+window.addEventListener('uninstall-progress', function(e) {
+    const d = e.detail;
+    addTerminalLine(d.message, d.phase === 'error' ? 'error' : '');
+    document.getElementById('progress-fill').style.width =
+        Math.max(0, d.percent) + '%';
+
+    if (d.phase === 'done') {
+        document.getElementById('terminal-cursor').style.display = 'none';
+        document.getElementById('done-footer').style.display = 'flex';
+    }
+});
+
+async function closeWindow() {
+    await window.pywebview.api.close_window();
+}
+
+function escHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
+
+async function init() {
+    const info = await window.pywebview.api.get_info();
+
+    currentLang = info.language || 'ro';
+    updateTexts();
+
+    document.getElementById('install-path').textContent = info.install_dir;
+
+    // Size hints
+    if (info.model_size_gb > 0) {
+        document.getElementById('models-size').textContent =
+            '~' + info.model_size_gb + ' GB \u2014 ' +
+            STRINGS[currentLang].models_path;
+    }
+    if (info.cuda_size_mb > 0) {
+        document.getElementById('cuda-size').textContent =
+            '~' + info.cuda_size_mb + ' MB \u2014 ' +
+            STRINGS[currentLang].cuda_path;
+    }
+
+}
+
+window.addEventListener('pywebviewready', init);
+</script>
+
+</body>
+</html>

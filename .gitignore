@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.pyo
+dist/
+build/
+*.spec.bak
+.env
+*.log
+*.tmp
+release-beta/
+GITRELEASE/
+*.exe
+.vscode/
+.idea/

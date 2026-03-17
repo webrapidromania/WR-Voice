@@ -1,0 +1,412 @@
+[
+    {
+        "category": "core",
+        "description": "Push-to-talk hotkey (default CAPS LOCK) triggers audio recording.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Configurable hotkey — user can change keybind from tray menu, persisted in config.json.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Audio capture via sounddevice at 16kHz with real-time level monitoring.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Speech-to-text via faster-whisper (CTranslate2 backend) — fast GPU inference.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Experimental RO Whisper support — TransferRapid/whisper-large-v3-turbo_ro loaded via HuggingFace repo ID, faster-whisper handles download+conversion natively.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "GPU-accelerated inference using CUDA with automatic CTranslate2 device selection.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "CPU fallback when no NVIDIA GPU is detected (uses int8 compute type).",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "CUDA DLL directory bootstrap at startup to ensure CTranslate2 finds all NVIDIA libs.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Auto-paste transcribed text to the last focused window via pyperclip + Ctrl+V.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Config persistence — all settings stored in config.json, loaded on every access.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Transcription history — last 5 results stored in config.json, accessible from tray.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Autostart with Windows — registry key written/deleted via winreg HKCU Run.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Language selection (Romanian / English) — affects Whisper decode + cleanup patterns.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Enable/disable toggle — suspends hotkey listening without exiting the app.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Hallucination guards — rejects prompt echoes (>75% similarity), punctuation-only, <2 chars, digits-only, non-Romanian, >5 words/second.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Audio validation — rejects clips <0.35s, peak <0.015, RMS <0.006, short+silent combos.",
+        "passes": true
+    },
+    {
+        "category": "core",
+        "description": "Quick fix corrections — regex patterns for common Whisper misrecognitions (e.g. Excel->exe, caps loc->Caps Lock).",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Level 1 Raw — returns text as-is with only whitespace trimming.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Level 2 Balanced — removes Romanian/English fillers, duplicate words, basic punctuation fix.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Level 3 Aggressive — Level 2 plus leading conjunctions removed, sentence capitalization, period appended.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Level 4 Mega-aggressive — Level 3 plus complex filler patterns and short sentence filtering.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Context-aware cleanup — auto-detects active window process name and title, maps to cleanup context.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Context mapping — Slack/Discord/Teams to casual, VSCode/Terminal to raw, Word/Notion to document, browser to formal.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Manual context override — user can force a specific context (casual/formal/document/raw) from tray.",
+        "passes": true
+    },
+    {
+        "category": "cleanup",
+        "description": "Punctuation fixer — removes overloaded commas, fixes comma-before-conjunctions, trims trailing commas.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Voice command 'sterge asta' triggers Ctrl+Z (undo) on the target window.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Voice command 'selecteaza tot' triggers Ctrl+A (select all) on the target window.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Voice command 'anuleaza' cancels paste — no text is sent to the window.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Voice command 'trimite' triggers Ctrl+Enter (send message) on the target window.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Diacritics-normalized command matching — Romanian diacritics are stripped before pattern matching.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Keyword fallback detection — matches the last word of the transcription against command keywords.",
+        "passes": true
+    },
+    {
+        "category": "commands",
+        "description": "Target window focus restore — SetForegroundWindow to saved HWND before sending keystrokes.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "System tray icon using pystray — zero visible UI at idle, all interaction via right-click menu.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "WebRapid logo as tray icon — PNG logo displayed for idle/done/disabled states, fallback to programmatic WR icon.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "State-aware icon colors — green=idle/done, red=recording, blue=loading/processing, dim=disabled.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Recording animation — background thread pulses icon between bright red dot and dim red dot at 0.5s intervals.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Dynamic tooltip — tray_icon.title updated on every set_state() call showing current app status.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Left-click tray icon toggles pill overlay show/hide via default=True invisible menu item.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Status label at top of tray menu showing current state.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Model submenu — Tiny, Base, Small, Medium, Large v3, Turbo, Turbo RO (Experimental); current model prefixed with >.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Language submenu — Romanian / English toggle, persisted to config.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Cleanup level submenu — levels 1-4 with descriptive labels, current level marked with >.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Context override submenu — Auto/Casual/Formal/Document/Raw options, persisted to config.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Active window title display in menu — shows short title of currently focused window.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Transcription history submenu — last 5 results as clickable items that copy text to clipboard.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Voice commands info submenu — read-only list of all available voice commands and their keyboard actions.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Enable/Disable toggle — suspends hotkey listening without closing the app.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Autostart toggle from tray — writes or removes the Windows registry Run key for WR Voice.",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Clean exit — unhooks keyboard, stops tray, then os._exit(0).",
+        "passes": true
+    },
+    {
+        "category": "tray",
+        "description": "Tray menu auto-rebuild on state or config change via rebuild_tray_menu().",
+        "passes": true
+    },
+    {
+        "category": "ui",
+        "description": "Floating pill overlay — frameless transparent topmost window, centered horizontally above taskbar.",
+        "passes": true
+    },
+    {
+        "category": "ui",
+        "description": "Waveform animation — animated green bars of varying heights during recording state.",
+        "passes": true
+    },
+    {
+        "category": "ui",
+        "description": "Loading animation — cycling dots animation during loading and processing states.",
+        "passes": true
+    },
+    {
+        "category": "ui",
+        "description": "Logo on pill — WebRapid W logo displayed on left side of pill overlay.",
+        "passes": true
+    },
+    {
+        "category": "ui",
+        "description": "Pill drag to reposition — user can drag pill to any screen position via mouse.",
+        "passes": true
+    },
+    {
+        "category": "ui",
+        "description": "Pill auto-hide when idle — window withdraws automatically on idle and done state.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Frameless always-on-top window — overrideredirect(True) + topmost attribute prevents losing the window.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Window drag via header — ButtonPress-1 and B1-Motion bindings on header bar and title label.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Windows 11 rounded corners — DwmSetWindowAttribute with DWMWA_WINDOW_CORNER_PREFERENCE=DWMWCP_ROUND.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Fade-in entrance animation — alpha 0.0 to 1.0 over approximately 270ms at 60fps via after(16).",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Button hover transitions — Enter/Leave color change bindings on every button.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Language selector (ro/en) — separate dialog before main installer window.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "System check screen — detects GPU (nvidia-smi + PyTorch fallback), VRAM, RAM, recommends model.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "GPU detection with PyTorch fallback — tries nvidia-smi first, then torch.cuda for RTX 5080/Blackwell.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Model recommendation by VRAM — automatically pre-selects the best Whisper model for detected GPU.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Model selection dropdown — 5 Whisper models (tiny/base/small/medium/large-v3) with VRAM info.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Install path browser — user can change destination folder via tkinter filedialog.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Threaded installation — all install steps run in background thread so UI stays responsive.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Live log display during installation — scrollable text widget with step-by-step output.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Animated progress bar — green fill with percentage label.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Standalone EXE copy — copies bundled WR Voice.exe and Uninstall.exe to install dir.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Config.json generation — writes fresh config with selected model, language, cleanup_level=2.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Done screen — shows success checkmark, chosen model, language, and Launch WR Voice button.",
+        "passes": true
+    },
+    {
+        "category": "installer",
+        "description": "Bundled uninstall.exe included in installer EXE and copied to install dir during setup.",
+        "passes": true
+    },
+    {
+        "category": "uninstaller",
+        "description": "App files removal — deletes WR Voice.exe, config.json, logo from install directory.",
+        "passes": true
+    },
+    {
+        "category": "uninstaller",
+        "description": "Optional model cache removal — checkbox to delete downloaded Whisper models (~1-10 GB).",
+        "passes": true
+    },
+    {
+        "category": "uninstaller",
+        "description": "Self-delete — batch file waits 2s, deletes uninstaller EXE and install folder.",
+        "passes": true
+    },
+    {
+        "category": "uninstaller",
+        "description": "Clean tkinter UI — centered 420x400 window with dark theme matching installer style.",
+        "passes": true
+    },
+    {
+        "category": "distribution",
+        "description": "Single-file installer EXE via PyInstaller + UPX — bundles app EXE + uninstaller (~165 MB).",
+        "passes": true
+    },
+    {
+        "category": "distribution",
+        "description": "Standalone app EXE via PyInstaller — ~140 MB single-file with all dependencies.",
+        "passes": true
+    },
+    {
+        "category": "distribution",
+        "description": "Uninstaller spec — uninstall.spec builds standalone Uninstall.exe (~10 MB).",
+        "passes": true
+    },
+    {
+        "category": "distribution",
+        "description": "Offline pre-conversion script — scripts/download_turbo_ro.py for pre-downloading Turbo RO model.",
+        "passes": true
+    }
+]
