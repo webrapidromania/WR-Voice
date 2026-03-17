@@ -13,3 +13,7 @@ GITRELEASE/
 .vscode/
 .idea/
 AGENTS.md
+memory/
+progress.md
+MEMORY.md
+*.md.bak
